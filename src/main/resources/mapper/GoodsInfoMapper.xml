@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.yong.mall.dao.GoodsInfoMapper">
+    <resultMap id="BaseResultMap" type="org.yong.mall.pojo.GoodsInfo">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="category_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="main_image" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="sub_images" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="detail" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+            <arg column="stock" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="status" jdbcType="BIT" javaType="java.lang.Boolean"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, category_id, name, title, main_image, sub_images, detail, price, stock, status,
+        create_time, update_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.yong.mall.pojo.GoodsInfoExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'false' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from goods_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from goods_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM goods_info
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="org.yong.mall.pojo.GoodsInfo">
+        INSERT INTO goods_info (id, category_id, name,
+                                title, main_image, sub_images,
+                                detail, price, stock,
+                                status)
+        VALUES (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+                #{title,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, #{subImages,jdbcType=VARCHAR},
+                #{detail,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER},
+                #{status,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="org.yong.mall.pojo.GoodsInfo">
+        insert into goods_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="mainImage != null">
+                main_image,
+            </if>
+            <if test="subImages != null">
+                sub_images,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="mainImage != null">
+                #{mainImage,jdbcType=VARCHAR},
+            </if>
+            <if test="subImages != null">
+                #{subImages,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.yong.mall.pojo.GoodsInfo">
+        update goods_info
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="mainImage != null">
+                main_image = #{mainImage,jdbcType=VARCHAR},
+            </if>
+            <if test="subImages != null">
+                sub_images = #{subImages,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="stock != null">
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="updateTime != null">
+                update_time = now(),
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.yong.mall.pojo.GoodsInfo">
+        UPDATE goods_info
+        SET category_id = #{categoryId,jdbcType=INTEGER},
+            name        = #{name,jdbcType=VARCHAR},
+            title       = #{title,jdbcType=VARCHAR},
+            main_image  = #{mainImage,jdbcType=VARCHAR},
+            sub_images  = #{subImages,jdbcType=VARCHAR},
+            detail      = #{detail,jdbcType=VARCHAR},
+            price       = #{price,jdbcType=DECIMAL},
+            stock       = #{stock,jdbcType=INTEGER},
+            status      = #{status,jdbcType=BIT},
+            update_time = now()
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
