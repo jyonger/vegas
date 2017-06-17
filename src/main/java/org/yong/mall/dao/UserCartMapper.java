@@ -1,6 +1,8 @@
 package org.yong.mall.dao;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.yong.mall.pojo.UserCart;
 import org.yong.mall.pojo.UserCartExample;
 
@@ -18,4 +20,17 @@ public interface UserCartMapper {
     int updateByPrimaryKeySelective(UserCart record);
 
     int updateByPrimaryKey(UserCart record);
+
+    UserCart getCartByUserIdAndGoodsId(@Param("userId") Integer userId, @Param("goodsId") Integer goodsId);
+
+    List<UserCart> listCartByUserId(@Param("userId") Integer userId);
+
+    Integer countAllCheckByUserId(@Param("userId") Integer userId);
+
+    int removeCartGoods(@Param("userId") Integer userId, @Param("idList") List<String> idList);
+
+    int updateChecked(@Param("userId") Integer userId, @Param("goodsId") Integer goodsId, @Param("checked") Integer
+            checked);
+
+    int countCart(@Param("userId") Integer userId);
 }

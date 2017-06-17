@@ -1,6 +1,8 @@
 package org.yong.mall.dao;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.yong.mall.pojo.GoodsCategory;
 import org.yong.mall.pojo.GoodsCategoryExample;
 
@@ -18,4 +20,6 @@ public interface GoodsCategoryMapper {
     int updateByPrimaryKeySelective(GoodsCategory record);
 
     int updateByPrimaryKey(GoodsCategory record);
+
+    List<GoodsCategory> selectChildCategory(@Param("parentId")Integer parentId);
 }

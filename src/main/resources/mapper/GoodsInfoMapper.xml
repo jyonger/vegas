@@ -12,7 +12,7 @@
             <arg column="detail" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
             <arg column="stock" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-            <arg column="status" jdbcType="BIT" javaType="java.lang.Boolean"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
             <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
             <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
         </constructor>
@@ -203,4 +203,40 @@
             update_time = now()
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="listGoods" resultType="GoodsInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM goods_info
+        ORDER BY id ASC
+    </select>
+    <select id="listGoodsByNameAndId" resultType="GoodsInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM goods_info
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="name != null">
+                AND name like #{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="listGoodsByNameAndCategoryIds" resultType="GoodsInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM goods_info
+        WHERE status = 1
+        <if test="name != null">
+            AND name LIKE #{name}
+        </if>
+        <if test="categories != null">
+            AND category_id IN
+            <foreach item="item" index="index" open="(" separator="," close=")" collection="categories">
+                #{item}
+            </foreach>
+        </if>
+    </select>
 </mapper>

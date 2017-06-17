@@ -43,7 +43,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, parent_id, name, status, order, create_time, update_time
+        id, parent_id, name, status, `order`, create_time, update_time
     </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.yong.mall.pojo.GoodsCategoryExample">
         select
@@ -143,4 +143,10 @@
             update_time = now()
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectChildCategory" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM goods_category WHERE parent_id = #{parentId}
+    </select>
 </mapper>
