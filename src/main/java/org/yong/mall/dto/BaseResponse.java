@@ -51,7 +51,7 @@ public class BaseResponse<T> {
     }
 
     public static BaseResponse getSuccessMessage(String info) {
-        return new BaseResponse(ResultEnum.ERROR.getCode(), info);
+        return new BaseResponse(ResultEnum.SUCCESS.getCode(), info);
     }
 
     public static <T> BaseResponse<T> getSuccess(String data) {
@@ -59,6 +59,6 @@ public class BaseResponse<T> {
     }
 
     public static <T> BaseResponse<T> getError(String data) {
-        return new BaseResponse<T>(ResultEnum.SUCCESS.getCode(), data);
+        return new BaseResponse<T>(ResultEnum.ERROR.getCode(), data);
     }
 }

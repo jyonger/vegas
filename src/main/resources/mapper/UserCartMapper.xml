@@ -189,4 +189,19 @@
         FROM user_cart
         WHERE user_id = #{userId}
     </select>
+
+    <select id="getCheckedByUserId" resultType="UserCart">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_cart
+        WHERE user_id = #{userId}
+        AND checked = 2
+    </select>
+
+    <delete id="removeByList" >
+      DELETE FROM user_cart WHERE id IN 
+      <foreach collection="cartList" item="item" open="(" separator="," close=")">
+          #{item.id}
+      </foreach>
+    </delete>
 </mapper>

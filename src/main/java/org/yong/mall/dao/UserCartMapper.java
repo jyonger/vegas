@@ -33,4 +33,8 @@ public interface UserCartMapper {
             checked);
 
     int countCart(@Param("userId") Integer userId);
+
+    List<UserCart> getCheckedByUserId(@Param("userId") Integer userId);
+
+    int removeByList(@Param("cartList") List<UserCart> cartList);
 }
